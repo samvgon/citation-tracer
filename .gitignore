@@ -1,0 +1,24 @@
+# Secrets
+.env
+
+# Data and caches (data/sample/ is committed for the quick-start)
+data/*
+!data/.gitkeep
+!data/sample/
+*.sqlite
+*.sqlite3
+*.duckdb
+*.pdf
+*.gguf
+
+# Run logs and eval outputs
+runs/
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/

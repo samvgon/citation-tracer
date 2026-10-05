@@ -1,0 +1,34 @@
+[
+  {
+    "id": "toy-001",
+    "claim": {
+      "id": "toy-001-claim",
+      "text": "Daily vitamin Q supplementation prevents seasonal colds.",
+      "citing_paper_id": "toy-citing-1"
+    },
+    "cited_papers": [
+      {
+        "id": "toy-cited-1",
+        "title": "A small pilot study of vitamin Q and cold incidence (SYNTHETIC)",
+        "text": "In this pilot of 40 adults, those taking vitamin Q reported somewhat fewer colds than controls, but the difference was not statistically significant. The study was not powered to detect an effect; larger trials are needed."
+      }
+    ],
+    "gold": {"distorted": true, "distortion_type": "certainty_inflation"}
+  },
+  {
+    "id": "toy-002",
+    "claim": {
+      "id": "toy-002-claim",
+      "text": "In a pilot of 40 adults, vitamin Q users reported somewhat fewer colds, though the difference was not significant.",
+      "citing_paper_id": "toy-citing-2"
+    },
+    "cited_papers": [
+      {
+        "id": "toy-cited-1",
+        "title": "A small pilot study of vitamin Q and cold incidence (SYNTHETIC)",
+        "text": "In this pilot of 40 adults, those taking vitamin Q reported somewhat fewer colds than controls, but the difference was not statistically significant. The study was not powered to detect an effect; larger trials are needed."
+      }
+    ],
+    "gold": {"distorted": false, "distortion_type": null}
+  }
+]

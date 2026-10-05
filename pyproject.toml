@@ -1,0 +1,39 @@
+[project]
+name = "citation-tracer"
+version = "0.1.0"
+description = "Agent that traces scientific claims through citation chains to find distortions (CS329Z)"
+authors = [
+    { name = "Sam Goncalves", email = "samantha.v.goncalves@hotmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.28.1",
+    "openai>=3.24.0",
+    "pydantic>=2.13.5",
+    "pydantic-settings>=2.15.0",
+    "python-dotenv>=1.2.4",
+    "pyyaml>=6.0.3",
+    "tenacity>=9.1.4",
+]
+
+[project.scripts]
+citation-tracer = "citation_tracer.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.12.23,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.10",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,12 @@
+llm:
+  base_url: http://localhost:8080/v1   # llama.cpp server; override with LLM_BASE_URL
+  model: local-model                   # override with LLM_MODEL
+  temperature: 0.0
+  max_tokens: 2048
+  timeout: 120.0
+grobid:
+  url: http://localhost:8070
+cache:
+  path: data/cache/cache.sqlite
+logging:
+  dir: runs
