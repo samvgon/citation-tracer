@@ -54,8 +54,39 @@ This prints the verdict and writes a JSONL log to `runs/`.
 
 ### Local model (optional)
 
-Serve a model with llama.cpp's `llama-server` (default port 8080) and leave `LLM_BASE_URL`
-unset; set `LLM_MODEL` to match the served model. GROBID setup: TODO (needed only for PDF parsing).
+Tested on Ubuntu 26.04, Ryzen AI Max+ 395, Radeon 8060S (RADV) via Vulkan. Build and models
+live outside the repo (`~/llama.cpp`, `~/models`).
+
+```bash
+# 1. Build llama.cpp with Vulkan (needs cmake, ninja-build, libvulkan-dev, glslc, spirv-headers, libcurl4-openssl-dev)
+git clone --depth 1 https://github.com/ggml-org/llama.cpp ~/llama.cpp
+cmake -S ~/llama.cpp -B ~/llama.cpp/build -G Ninja -DGGML_VULKAN=ON -DCMAKE_BUILD_TYPE=Release
+cmake --build ~/llama.cpp/build -j
+
+# 2. Download models into ~/models (~22 GiB total)
+B=https://huggingface.co; mkdir -p ~/models && cd ~/models
+curl -fLO $B/unsloth/Qwen3-30B-A3B-Instruct-2507-GGUF/resolve/main/Qwen3-30B-A3B-Instruct-2507-Q4_K_M.gguf  # default, 17.3 GiB
+curl -fLO $B/Qwen/Qwen3-8B-GGUF/resolve/main/Qwen3-8B-Q4_K_M.gguf                                           # small, 4.7 GiB
+curl -fLO $B/nomic-ai/nomic-embed-text-v1.5-GGUF/resolve/main/nomic-embed-text-v1.5.Q8_0.gguf              # embeddings, 0.14 GiB
+
+# 3. Serve on :8080 (served model name `local-model` matches config/default.yaml)
+scripts/serve_llm.sh                          # Qwen3-30B-A3B-Instruct-2507
+scripts/serve_llm.sh ~/models/Qwen3-8B-Q4_K_M.gguf   # or another model; extra args pass to llama-server
+uv run python scripts/check_llm.py            # expect: reply: 'OK'
+```
+
+The script pins `--device Vulkan0` (the Radeon; `vulkaninfo` also lists llvmpipe, a CPU
+renderer) and prints visible devices at startup. To confirm GPU use, run with `-lv 4` and look
+for `using device Vulkan0 (Radeon 8060S ...)` and `offloaded 49/49 layers to GPU`.
+Overrides: `PORT`, `CTX` (default 32768), `ALIAS`, `LLAMA_DIR`, `MODEL_DIR`.
+
+Ollama can run alongside, but models it has loaded hold GPU memory (check `ollama ps`; it
+unloads after its idle timeout). The script warns if Ollama has a model loaded.
+
+The embedding model is downloaded but not served by `serve_llm.sh` yet; serve it separately with
+`llama-server -m ~/models/nomic-embed-text-v1.5.Q8_0.gguf --embeddings --port 8081` when needed.
+
+GROBID setup: TODO (needed only for PDF parsing).
 
 ## Reproducing evaluation
 
