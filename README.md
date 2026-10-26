@@ -1,7 +1,7 @@
 # citation-tracer
 
-CS329Z course project: an agent that traces a scientific claim back through its citation chain
-to the original evidence and identifies where the claim was distorted (e.g. a hedged finding
+An agent that traces a scientific claim back through its citation chain to the original 
+evidence and identifies where the claim was distorted (e.g. a hedged finding
 restated as fact). Compares three methods: single-hop checking, fixed-depth tracing
 (LAGMiD-style), and agentic tracing (ours).
 
