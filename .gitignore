@@ -22,3 +22,6 @@ __pycache__/
 .ruff_cache/
 *.egg-info/
 dist/
+
+# Local scratch notes
+notes/
